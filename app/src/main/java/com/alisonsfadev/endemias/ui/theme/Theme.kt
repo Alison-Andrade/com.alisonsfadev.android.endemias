@@ -1,6 +1,5 @@
 package com.alisonsfadev.endemias.ui.theme
 
-import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
@@ -10,18 +9,14 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.view.WindowCompat
-import java.time.format.TextStyle
 
 
 // =============================================================================
@@ -180,7 +175,7 @@ val DarkEndemiaColors = EndemiaColors(
     onInfoContainer = ColorOnInfoDarkContainer,
 
     topBar         = Green800,
-    onTopBar       = Green100,
+    onTopBar       = Color.White,
     topBarSubtitle = Green200,
 )
 
@@ -190,54 +185,54 @@ val LocalEndemiaColors = staticCompositionLocalOf { LightEndemiaColors }
 // TYPOGRAPHY
 // =============================================================================
 
-//val EndemiaTypography = Typography(
-//    titleLarge = TextStyle(
-//        fontWeight = FontWeight.Medium,
-//        fontSize   = 18.sp,
-//        lineHeight = 24.sp,
-//    ),
-//    titleMedium = TextStyle(
-//        fontWeight = FontWeight.Medium,
-//        fontSize   = 15.sp,
-//        lineHeight = 20.sp,
-//    ),
-//    titleSmall = TextStyle(
-//        fontWeight = FontWeight.Medium,
-//        fontSize   = 13.sp,
-//        lineHeight = 18.sp,
-//    ),
-//    bodyLarge = TextStyle(
-//        fontWeight = FontWeight.Normal,
-//        fontSize   = 14.sp,
-//        lineHeight = 20.sp,
-//    ),
-//    bodyMedium = TextStyle(
-//        fontWeight = FontWeight.Normal,
-//        fontSize   = 13.sp,
-//        lineHeight = 18.sp,
-//    ),
-//    bodySmall = TextStyle(
-//        fontWeight = FontWeight.Normal,
-//        fontSize   = 12.sp,
-//        lineHeight = 16.sp,
-//    ),
-//    labelLarge = TextStyle(
-//        fontWeight = FontWeight.Medium,
-//        fontSize   = 12.sp,
-//        lineHeight = 16.sp,
-//    ),
-//    labelMedium = TextStyle(
-//        fontWeight = FontWeight.Normal,
-//        fontSize   = 11.sp,
-//        lineHeight = 15.sp,
-//    ),
-//    labelSmall = TextStyle(
-//        fontWeight = FontWeight.Normal,
-//        fontSize   = 10.sp,
-//        lineHeight = 14.sp,
-//        letterSpacing = 0.06.sp,
-//    ),
-//)
+val EndemiaTypography = Typography(
+    titleLarge = TextStyle(
+        fontWeight = FontWeight.Medium,
+        fontSize   = 18.sp,
+        lineHeight = 24.sp,
+    ),
+    titleMedium = TextStyle(
+        fontWeight = FontWeight.Medium,
+        fontSize   = 15.sp,
+        lineHeight = 20.sp,
+    ),
+    titleSmall = TextStyle(
+        fontWeight = FontWeight.Medium,
+        fontSize   = 13.sp,
+        lineHeight = 18.sp,
+    ),
+    bodyLarge = TextStyle(
+        fontWeight = FontWeight.Normal,
+        fontSize   = 14.sp,
+        lineHeight = 20.sp,
+    ),
+    bodyMedium = TextStyle(
+        fontWeight = FontWeight.Normal,
+        fontSize   = 13.sp,
+        lineHeight = 18.sp,
+    ),
+    bodySmall = TextStyle(
+        fontWeight = FontWeight.Normal,
+        fontSize   = 12.sp,
+        lineHeight = 16.sp,
+    ),
+    labelLarge = TextStyle(
+        fontWeight = FontWeight.Medium,
+        fontSize   = 12.sp,
+        lineHeight = 16.sp,
+    ),
+    labelMedium = TextStyle(
+        fontWeight = FontWeight.Normal,
+        fontSize   = 11.sp,
+        lineHeight = 15.sp,
+    ),
+    labelSmall = TextStyle(
+        fontWeight = FontWeight.Normal,
+        fontSize   = 10.sp,
+        lineHeight = 14.sp,
+        letterSpacing = 0.06.sp,
+    ),
+)
 
 // =============================================================================
 // SHAPES
@@ -281,24 +276,13 @@ fun EndemiasTheme(
     val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
     val endemiaColors = if (darkTheme) DarkEndemiaColors else LightEndemiaColors
 
-    val view = LocalView.current
-    if (!view.isInEditMode) {
-        SideEffect {
-            val window = (view.context as Activity).window
-            window.statusBarColor = endemiaColors.topBar.toArgb()
-            WindowCompat
-                .getInsetsController(window, view)
-                .isAppearanceLightStatusBars = !darkTheme
-        }
-    }
-
     CompositionLocalProvider(
         LocalEndemiaColors  provides endemiaColors,
         LocalEndemiaSpacing provides EndemiaSpacing(),
     ) {
         MaterialTheme(
             colorScheme = colorScheme,
-            typography  = Typography,
+            typography  = EndemiaTypography,
             shapes      = EndemiaShapes,
             content     = content,
         )

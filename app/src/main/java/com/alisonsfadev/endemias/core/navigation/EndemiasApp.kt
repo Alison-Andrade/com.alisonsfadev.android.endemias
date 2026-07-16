@@ -1,5 +1,6 @@
 package com.alisonsfadev.endemias.core.navigation
 
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -17,6 +18,7 @@ fun EndemiasApp() {
                 navController = navController
             )
         },
+        contentWindowInsets = WindowInsets(),
         containerColor = MaterialTheme.colorScheme.background
     ) { innerPadding ->
         EndemiasNavHost(
