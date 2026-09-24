@@ -16,11 +16,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -34,6 +36,7 @@ import com.alisonsfadev.endemias.ui.theme.EndemiasTheme
 import com.alisonsfadev.endemias.ui.theme.endemiaColors
 import com.alisonsfadev.endemias.ui.theme.spacing
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VisitasScreen(
     onQuarteiraoClick: (Long) -> Unit,
@@ -41,7 +44,13 @@ fun VisitasScreen(
 ) {
     val quarteiroes by viewModel.quarteiroes.collectAsStateWithLifecycle()
 
-    Scaffold() {paddingValues ->
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Quarteirões Atribuídos") }
+            )
+        }
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -50,9 +59,9 @@ fun VisitasScreen(
                 .padding(paddingValues)
         ) {
             Text(
-                text = "Quarteirões da sua área",
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onBackground
+                text = "Selecione o quarteirão para gerenciar os imóveis",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
             Spacer(Modifier.height(MaterialTheme.spacing.xl))

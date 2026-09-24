@@ -11,11 +11,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -28,9 +34,12 @@ import com.alisonsfadev.endemias.features.visitas.domain.Imovel
 import com.alisonsfadev.endemias.ui.theme.endemiaColors
 import com.alisonsfadev.endemias.ui.theme.spacing
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ImoveisScreen(
     quarteiraoId: Long,
+    onNavigateBack: () -> Unit,
+    onImovelClick: (Long) -> Unit,
 ) {
     val viewModel: ImoveisViewModel = viewModel(
         factory = viewModelFactory {
@@ -39,7 +48,18 @@ fun ImoveisScreen(
     )
     val imoveis by viewModel.imoveis.collectAsStateWithLifecycle()
 
-    Scaffold() { paddingValues ->
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Imóveis do Quarteirão #$quarteiraoId") },
+                navigationIcon = {
+                    IconButton(onClick = onNavigateBack) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Voltar")
+                    }
+                }
+            )
+        }
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -48,16 +68,19 @@ fun ImoveisScreen(
                 .padding(paddingValues)
         ) {
             Text(
-                text = "Imóveis do quarteirão",
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onBackground
+                text = "Selecione um imóvel para vistoriar",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
             Spacer(Modifier.height(MaterialTheme.spacing.xl))
 
             LazyColumn {
                 items(imoveis, key = { it.id }) { imovel ->
-                    ImovelCard(imovel = imovel)
+                    ImovelCard(
+                        imovel = imovel,
+                        onClick = { onImovelClick(imovel.id) }
+                    )
                 }
             }
         }
@@ -65,8 +88,12 @@ fun ImoveisScreen(
 }
 
 @Composable
-private fun ImovelCard(imovel: Imovel) {
+private fun ImovelCard(
+    imovel: Imovel,
+    onClick: () -> Unit,
+) {
     Card(
+        onClick = onClick,
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         modifier = Modifier
             .fillMaxWidth()
@@ -78,7 +105,7 @@ private fun ImovelCard(imovel: Imovel) {
                 .padding(MaterialTheme.spacing.lg)
         ) {
             Text(
-                text = imovel.numero,
+                text = "Nº ${imovel.numero}",
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface
             )

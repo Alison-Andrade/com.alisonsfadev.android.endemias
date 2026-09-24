@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.alisonsfadev.endemias.ui.theme.EndemiasTheme
+import com.alisonsfadev.endemias.ui.theme.endemiaColors
 
 @Composable
 fun BottomBar(
@@ -31,21 +32,21 @@ fun BottomBar(
         tonalElevation = 0.dp
     ) {
         bottomNavItems.forEach { item ->
-            val isSelected = currentRoute == item.route
+            val isSelected = currentRoute == item.route || (currentRoute?.startsWith("${item.route}/") == true)
 
             NavigationBarItem(
                 icon = {
                     Icon(
                         imageVector = item.icon,
                         contentDescription = item.label,
-                        tint = if(isSelected) MaterialTheme.colorScheme.primary
+                        tint = if(isSelected) MaterialTheme.endemiaColors.visitado
                             else MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 },
                 label = {
                     Text(
                         text = item.label,
-                        color = if(isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                        color = if(isSelected) MaterialTheme.endemiaColors.visitado else MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 },
                 selected = isSelected,
@@ -61,7 +62,11 @@ fun BottomBar(
                     }
                 },
                 colors = NavigationBarItemDefaults.colors(
-                    indicatorColor = Color.Transparent
+                    indicatorColor = Color.Transparent,
+                    selectedIconColor = MaterialTheme.endemiaColors.visitado,
+                    selectedTextColor = MaterialTheme.endemiaColors.visitado,
+                    unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             )
         }

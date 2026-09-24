@@ -13,6 +13,7 @@ import androidx.navigation.navigation
 import com.alisonsfadev.endemias.features.home.ui.HomeScreen
 import com.alisonsfadev.endemias.features.perfil.ui.PerfilScreen
 import com.alisonsfadev.endemias.features.relatorios.ui.RelatoriosScreen
+import com.alisonsfadev.endemias.features.visitas.ui.FichaVisitaScreen
 import com.alisonsfadev.endemias.features.visitas.ui.ImoveisScreen
 import com.alisonsfadev.endemias.features.visitas.ui.VisitasScreen
 
@@ -50,7 +51,24 @@ fun EndemiasNavHost(
                 arguments = listOf(navArgument("quarteiraoId") { type = NavType.LongType })
             ) { backStackEntry ->
                 val quarteiraoId = backStackEntry.arguments?.getLong("quarteiraoId") ?: 0L
-                ImoveisScreen(quarteiraoId = quarteiraoId)
+                ImoveisScreen(
+                    quarteiraoId = quarteiraoId,
+                    onNavigateBack = { navController.popBackStack() },
+                    onImovelClick = { imovelId ->
+                        navController.navigate(EndemiasScreens.visitasFichaRoute(imovelId))
+                    }
+                )
+            }
+            composable(
+                route = EndemiasScreens.VISITAS_FICHA,
+                arguments = listOf(navArgument("imovelId") { type = NavType.LongType })
+            ) { backStackEntry ->
+                val imovelId = backStackEntry.arguments?.getLong("imovelId") ?: 0L
+                FichaVisitaScreen(
+                    imovelId = imovelId,
+                    onNavigateBack = { navController.popBackStack() },
+                    onSaveSuccess = { navController.popBackStack() }
+                )
             }
         }
 
