@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.alisonsfadev.endemias.features.home.ui.HomeScreen
+import com.alisonsfadev.endemias.features.auth.ui.LoginScreen
 import com.alisonsfadev.endemias.features.perfil.ui.PerfilScreen
 import com.alisonsfadev.endemias.features.relatorios.ui.RelatoriosScreen
 import com.alisonsfadev.endemias.features.visitas.ui.FichaVisitaScreen
@@ -24,13 +25,23 @@ fun EndemiasNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = EndemiasScreens.HOME,
+        startDestination = EndemiasScreens.LOGIN,
         modifier = modifier,
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
         popEnterTransition = { EnterTransition.None },
         popExitTransition = { ExitTransition.None }
     ) {
+        composable(EndemiasScreens.LOGIN) {
+            LoginScreen(
+                onLoginSuccess = {
+                    navController.navigate(EndemiasScreens.HOME) {
+                        popUpTo(EndemiasScreens.LOGIN) { inclusive = true }
+                    }
+                }
+            )
+        }
+
         composable(EndemiasScreens.HOME) {
             HomeScreen()
         }

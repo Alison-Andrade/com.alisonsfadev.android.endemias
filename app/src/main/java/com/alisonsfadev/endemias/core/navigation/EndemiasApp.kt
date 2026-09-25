@@ -8,15 +8,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 
+import androidx.compose.runtime.getValue
+import androidx.navigation.compose.currentBackStackEntryAsState
+
 @Composable
 fun EndemiasApp() {
     val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
 
     Scaffold(
         bottomBar = {
-            BottomBar(
-                navController = navController
-            )
+            if (currentRoute != EndemiasScreens.LOGIN) {
+                BottomBar(
+                    navController = navController
+                )
+            }
         },
         contentWindowInsets = WindowInsets(),
         containerColor = MaterialTheme.colorScheme.background

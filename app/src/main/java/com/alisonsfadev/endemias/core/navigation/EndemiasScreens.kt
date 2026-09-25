@@ -1,6 +1,7 @@
 package com.alisonsfadev.endemias.core.navigation
 
 object EndemiasScreens {
+    const val LOGIN = "login"
     const val HOME = "home"
     const val VISITAS = "visitas"
     const val RELATORIOS = "relatorios"
