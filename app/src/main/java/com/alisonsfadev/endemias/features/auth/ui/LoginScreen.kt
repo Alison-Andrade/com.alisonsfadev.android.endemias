@@ -26,7 +26,9 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.alisonsfadev.endemias.ui.theme.EndemiasTheme
 import com.alisonsfadev.endemias.ui.theme.spacing
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun LoginScreen(
@@ -48,7 +50,7 @@ fun LoginScreen(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Endemias Mobile",
+                text = "SISVETOR",
                 style = MaterialTheme.typography.headlineLarge,
                 color = MaterialTheme.colorScheme.primary
             )
@@ -100,5 +102,13 @@ fun LoginScreen(
                 Text(if (uiState.isLoading) "Entrando..." else "Entrar")
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun LoginScreenPreview() {
+    EndemiasTheme(darkTheme = true) {
+        LoginScreen(onLoginSuccess = {})
     }
 }
