@@ -16,7 +16,7 @@ import com.alisonsfadev.endemias.features.perfil.ui.PerfilScreen
 import com.alisonsfadev.endemias.features.relatorios.ui.RelatoriosScreen
 import com.alisonsfadev.endemias.features.visitas.ui.FichaVisitaScreen
 import com.alisonsfadev.endemias.features.visitas.ui.ImoveisScreen
-import com.alisonsfadev.endemias.features.visitas.ui.VisitasScreen
+import com.alisonsfadev.endemias.features.visitas.ui.QuarteiroesScreen
 
 @Composable
 fun EndemiasNavHost(
@@ -51,7 +51,7 @@ fun EndemiasNavHost(
             route = EndemiasScreens.VISITAS
         ) {
             composable(EndemiasScreens.VISITAS_LISTA) {
-                VisitasScreen(
+                QuarteiroesScreen(
                     onQuarteiraoClick = { quarteiraoId->
                         navController.navigate(EndemiasScreens.visitasImoveisRoute(quarteiraoId))
                     }
