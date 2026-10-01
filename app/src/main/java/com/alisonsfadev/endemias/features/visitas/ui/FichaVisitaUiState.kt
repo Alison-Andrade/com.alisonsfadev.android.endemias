@@ -19,6 +19,6 @@ data class FichaVisitaUiState(
     val erro: String? = null,
     val sucesso: Boolean = false
 ) {
-    val exigeTratamento: Boolean
-        get() = status == StatusVisita.TRABALHADO || status == StatusVisita.RECUPERADO
+    val trabalhado: Boolean
+        get() = status == StatusVisita.TRABALHADO
 }
