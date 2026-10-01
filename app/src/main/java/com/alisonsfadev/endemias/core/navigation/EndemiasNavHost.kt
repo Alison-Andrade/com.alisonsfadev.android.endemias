@@ -15,6 +15,7 @@ import com.alisonsfadev.endemias.features.auth.ui.LoginScreen
 import com.alisonsfadev.endemias.features.perfil.ui.PerfilScreen
 import com.alisonsfadev.endemias.features.relatorios.ui.RelatoriosScreen
 import com.alisonsfadev.endemias.features.visitas.ui.FichaVisitaScreen
+import com.alisonsfadev.endemias.features.visitas.ui.FichaVisitaUiState
 import com.alisonsfadev.endemias.features.visitas.ui.ImoveisScreen
 import com.alisonsfadev.endemias.features.visitas.ui.QuarteiroesScreen
 
@@ -78,7 +79,8 @@ fun EndemiasNavHost(
                 FichaVisitaScreen(
                     imovelId = imovelId,
                     onNavigateBack = { navController.popBackStack() },
-                    onSaveSuccess = { navController.popBackStack() }
+                    onSaveSuccess = { navController.popBackStack() },
+                    uiState = FichaVisitaUiState()
                 )
             }
         }
