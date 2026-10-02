@@ -5,5 +5,9 @@ data class Quarteirao(
     val numero: Int,
     val logradouroPrincipal: String,
     val totalImoveis: Int,
-    val imoveisVisitados: Int
+    val imoveisVisitados: Int,
+    val residencias: Int = 0,
+    val comercios: Int = 0,
+    val terrenosBaldios: Int = 0,
+    val outros: Int = 0,
 )

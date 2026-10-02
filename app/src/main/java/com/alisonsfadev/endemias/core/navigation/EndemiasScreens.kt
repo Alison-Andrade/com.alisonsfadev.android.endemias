@@ -6,6 +6,8 @@ object EndemiasScreens {
     const val VISITAS = "visitas"
     const val RELATORIOS = "relatorios"
     const val PERFIL = "perfil"
+    const val ARG_IMOVEL_ID = "imovelId"
+    const val ARG_QUARTEIRAO_ID = "quarteiraoId"
 
     const val VISITAS_LISTA = "visitas/lista"
     const val VISITAS_IMOVEIS = "visitas/{quarteiraoId}/imoveis"

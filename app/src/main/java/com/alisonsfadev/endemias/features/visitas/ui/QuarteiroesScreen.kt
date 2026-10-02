@@ -37,7 +37,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.alisonsfadev.endemias.features.visitas.domain.Quarteirao
 import com.alisonsfadev.endemias.ui.theme.EndemiasTheme
 import com.alisonsfadev.endemias.ui.theme.endemiaColors
@@ -47,7 +47,7 @@ import com.alisonsfadev.endemias.ui.theme.spacing
 @Composable
 fun QuarteiroesScreen(
     onQuarteiraoClick: (Long) -> Unit,
-    viewModel: VisitasViewModel = viewModel()
+    viewModel: QuarteiroesViewModel = hiltViewModel()
 ) {
     val quarteiroes by viewModel.quarteiroes.collectAsStateWithLifecycle()
 
@@ -170,7 +170,7 @@ private fun QuarteiraoCard(
                         modifier = Modifier.size(18.dp)
                     )
                     Text(
-                        text = "R " + 23,
+                        text = "R ${quarteirao.residencias}",
                         style = MaterialTheme.typography.bodySmall,
                     )
                 }
@@ -185,7 +185,7 @@ private fun QuarteiraoCard(
                         modifier = Modifier.size(18.dp)
                     )
                     Text(
-                        text = "C " + 1,
+                        text = "C ${quarteirao.comercios}",
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
@@ -200,7 +200,7 @@ private fun QuarteiraoCard(
                         modifier = Modifier.size(18.dp)
                     )
                     Text(
-                        text = "TB " + 6,
+                        text = "TB ${quarteirao.terrenosBaldios}",
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
@@ -215,7 +215,7 @@ private fun QuarteiraoCard(
                         modifier = Modifier.size(18.dp)
                     )
                     Text(
-                        text = "O " + 0,
+                        text = "O ${quarteirao.outros}",
                         color = MaterialTheme.colorScheme.onSurface,
                         style = MaterialTheme.typography.bodySmall,
                     )

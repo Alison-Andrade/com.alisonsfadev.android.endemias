@@ -27,9 +27,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.alisonsfadev.endemias.features.visitas.domain.Imovel
 import com.alisonsfadev.endemias.ui.theme.endemiaColors
 import com.alisonsfadev.endemias.ui.theme.spacing
@@ -40,12 +38,8 @@ fun ImoveisScreen(
     quarteiraoId: Long,
     onNavigateBack: () -> Unit,
     onImovelClick: (Long) -> Unit,
+    viewModel: ImoveisViewModel = hiltViewModel(),
 ) {
-    val viewModel: ImoveisViewModel = viewModel(
-        factory = viewModelFactory {
-            initializer { ImoveisViewModel(quarteiraoId) }
-        }
-    )
     val imoveis by viewModel.imoveis.collectAsStateWithLifecycle()
 
     Scaffold(
@@ -110,14 +104,15 @@ private fun ImovelCard(
                 color = MaterialTheme.colorScheme.onSurface
             )
             Spacer(Modifier.width(MaterialTheme.spacing.md))
-            Text(
-                text = imovel.tipo,
-                style = MaterialTheme.typography.bodySmall,
-                color = if (imovel.visitado)
-                    MaterialTheme.endemiaColors.visitado
-                else
-                    MaterialTheme.colorScheme.onSurfaceVariant
-            )
+            Column {
+                Text(text = imovel.tipo, style = MaterialTheme.typography.bodySmall)
+                Text(
+                    text = if (imovel.visitado) "Visitado" else "Pendente",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = if (imovel.visitado) MaterialTheme.endemiaColors.visitado
+                        else MaterialTheme.endemiaColors.pendente,
+                )
+            }
         }
     }
 }

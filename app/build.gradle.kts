@@ -35,8 +35,9 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        isCoreLibraryDesugaringEnabled = true
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures {
         compose = true
@@ -48,6 +49,8 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     // Fornece suporte a corrotinas nos componentes de ciclo de vida.
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     // Disponibiliza dispatchers de corrotinas para a thread principal do Android.
     implementation(libs.kotlinx.coroutines.android)
 
@@ -86,6 +89,7 @@ dependencies {
 
     // Executa testes unitários com JUnit 4.
     testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
 
     // Alinha as versões do Compose usadas nos testes instrumentados.
     androidTestImplementation(platform(libs.androidx.compose.bom))
@@ -100,4 +104,6 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     // Habilita ferramentas de inspeção da interface Compose no modo debug.
     debugImplementation(libs.androidx.compose.ui.tooling)
+
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
 }

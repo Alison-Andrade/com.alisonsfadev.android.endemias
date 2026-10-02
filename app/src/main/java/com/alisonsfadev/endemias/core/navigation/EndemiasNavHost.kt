@@ -14,8 +14,7 @@ import com.alisonsfadev.endemias.features.home.ui.HomeScreen
 import com.alisonsfadev.endemias.features.auth.ui.LoginScreen
 import com.alisonsfadev.endemias.features.perfil.ui.PerfilScreen
 import com.alisonsfadev.endemias.features.relatorios.ui.RelatoriosScreen
-import com.alisonsfadev.endemias.features.visitas.ui.FichaVisitaScreen
-import com.alisonsfadev.endemias.features.visitas.ui.FichaVisitaUiState
+import com.alisonsfadev.endemias.features.visitas.ui.FichaVisitaRoute
 import com.alisonsfadev.endemias.features.visitas.ui.ImoveisScreen
 import com.alisonsfadev.endemias.features.visitas.ui.QuarteiroesScreen
 
@@ -60,9 +59,9 @@ fun EndemiasNavHost(
             }
             composable(
                 route = EndemiasScreens.VISITAS_IMOVEIS,
-                arguments = listOf(navArgument("quarteiraoId") { type = NavType.LongType })
+                arguments = listOf(navArgument(EndemiasScreens.ARG_QUARTEIRAO_ID) { type = NavType.LongType })
             ) { backStackEntry ->
-                val quarteiraoId = backStackEntry.arguments?.getLong("quarteiraoId") ?: 0L
+                val quarteiraoId = requireNotNull(backStackEntry.arguments).getLong(EndemiasScreens.ARG_QUARTEIRAO_ID)
                 ImoveisScreen(
                     quarteiraoId = quarteiraoId,
                     onNavigateBack = { navController.popBackStack() },
@@ -73,14 +72,19 @@ fun EndemiasNavHost(
             }
             composable(
                 route = EndemiasScreens.VISITAS_FICHA,
-                arguments = listOf(navArgument("imovelId") { type = NavType.LongType })
-            ) { backStackEntry ->
-                val imovelId = backStackEntry.arguments?.getLong("imovelId") ?: 0L
-                FichaVisitaScreen(
-                    imovelId = imovelId,
+                arguments = listOf(navArgument(EndemiasScreens.ARG_IMOVEL_ID) { type = NavType.LongType })
+            ) {
+                FichaVisitaRoute(
                     onNavigateBack = { navController.popBackStack() },
-                    onSaveSuccess = { navController.popBackStack() },
-                    uiState = FichaVisitaUiState()
+                    onSaveSuccess = { proximoImovelId ->
+                        if (proximoImovelId == null) {
+                            navController.popBackStack()
+                        } else {
+                            navController.navigate(EndemiasScreens.visitasFichaRoute(proximoImovelId)) {
+                                popUpTo(EndemiasScreens.VISITAS_FICHA) { inclusive = true }
+                            }
+                        }
+                    },
                 )
             }
         }
